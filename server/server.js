@@ -20,6 +20,8 @@ server.use((req, res, next) => {
   next()
 })
 
+let msgHistory = [] // загулшка(вместо БД)
+
 server.get('/', (req, res) => {
   res.send('express serv dude')
 })
@@ -32,6 +34,13 @@ if (config.socketStatus) {
 
   socketIO.on('connection', (socket) => {
     console.log(`user with id: ${socket.id} is finally connected`)
+    socketIO.to(socket.id).emit('messageHistory', msgHistory) // обновление истории сообщений будет происходить только у пользователя, который подключился, а не у всех сразу
+
+    socket.on('newMessage', (arg) => {
+      msgHistory.push(arg) // сообщение после отправки добавляется в историю сообщений
+      socketIO.emit('messageHistory', msgHistory) // обновленная история сообщений отправляется всем клиентам
+    })
+
     socket.on('disconnect', () => {
       console.log(`the session of user: ${socket.id} is OVER`)
     })

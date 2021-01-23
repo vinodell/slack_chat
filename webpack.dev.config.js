@@ -1,10 +1,10 @@
-const webpack = require('webpack')
+require('dotenv').config()
+
 const { resolve } = require('path')
+const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESlintPlugin = require('eslint-webpack-plugin')
-
-require('dotenv').config()
 
 const { PORT, SOCKETS_IO_STATUS } = process.env
 // const socketStatus = process.env.SOCKETS_IO_STATUS === 'true' ? true : false
@@ -34,7 +34,8 @@ const config = {
       target: `http://localhost:${PORT || 8080}`, // server port
       ws: SOCKETS_IO_STATUS === 'true'
     },
-    publicPath: '/'
+    publicPath: '/',
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -62,7 +63,8 @@ const config = {
   },
   plugins: [
     new ESlintPlugin({
-      extensions: ['js', 'jsx']
+      extensions: ['js', 'jsx'],
+      exclude: 'node_modules'
     }),
     new MiniCssExtractPlugin({
       filename: 'css/style.css'
@@ -77,7 +79,7 @@ const config = {
       ]
     }),
     new webpack.DefinePlugin({
-      SOCKETS_IO_STATUS
+      SOCKETS_IO_STATUS: SOCKETS_IO_STATUS === 'true'
     })
   ]
 }
