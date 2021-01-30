@@ -15,10 +15,10 @@ server.use('/extra', express.static(`${__dirname}/public`)) // при огром
 // отсюда выгружаем статические данные, которые не меняются
 // в зависимости от пользователя. Текст/картинки/стили
 server.use(express.json({ limit: '50kb' }))
-server.use((req, res, next) => {
-  console.log(`${new Date()}: ${req.url} ${req.method} from ${req.ip}`)
-  next()
-})
+// server.use((req, res, next) => {
+//   console.log(`${new Date()}: ${req.url} ${req.method} from ${req.ip}`)
+//   next()
+// })
 
 let msgHistory = [] // загулшка(вместо БД)
 
@@ -26,8 +26,8 @@ server.get('/', (req, res) => {
   res.send('express serv dude')
 })
 
-if (config.socketStatus) {
-  console.log('Socket_IO status is:', config.socketStatus)
+console.log('Socket_IO status is:', config.socketStatus)
+if (config.socketStatus === 'true') {
   const socketIO = io(ioServer, {
     path: '/ws'
   })
@@ -47,8 +47,8 @@ if (config.socketStatus) {
   })
 }
 
-if (config.mongoStatus) {
-  console.log('mongodb status is:', config.mongoStatus)
+console.log('mongodb status is:', config.mongoStatus)
+if (config.mongoStatus === 'true') {
   mongoose.connect(config.mongoUrl, {
     useUnifiedTopology: true,
     useNewUrlParser: true,

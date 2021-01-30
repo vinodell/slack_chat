@@ -28,6 +28,7 @@
     "socket.io-client": "^3.0.5"
   },
   "devDependencies": {
+    "autoprefixer": "^10.2.3",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
@@ -47,8 +48,14 @@
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.6",
     "sass-loader": "^10.1.0",
+    "postcss": "^8.2.4",
+    "postcss-import": "^14.0.0",
+    "postcss-loader": "^4.2.0",
+    "postcss-preset-env": "^6.7.0",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1",
+    "style-loader": "^2.0.0",
+    "tailwindcss": "^2.0.2",
     "webpack-dev-server": "^3.11.1"
   },
   "husky": {

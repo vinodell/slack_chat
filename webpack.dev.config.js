@@ -54,7 +54,13 @@ const config = {
               publicPath: '../'
             }
           },
-          'css-loader', // собирает все эти файлы в единые куски (2)
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          }, // собирает все эти файлы в единые куски (2)
+          'postcss-loader',
           'sass-loader' // sass преобразует это в css (1) *!webpack считывает код снизу вверх!
         ],
         exclude: /node_modules/
@@ -79,7 +85,7 @@ const config = {
       ]
     }),
     new webpack.DefinePlugin({
-      SOCKETS_IO_STATUS: SOCKETS_IO_STATUS === 'true'
+      SOCKETS_IO_STATUS
     })
   ]
 }
