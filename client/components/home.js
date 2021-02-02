@@ -1,17 +1,13 @@
 import React from 'react'
 
-import Sidebar from './sidebar'
-import Chat from './chat'
+import Sidebar from './common/sidebar'
+import Chat from './common/chat-side'
 
 const Home = () => {
   return (
-    <div>
-      <div className="w-full border shadow bg-white">
-        <div className="flex">
-          <Sidebar />
-          <Chat />
-        </div>
-      </div>
+    <div className="h-screen overflow-hidden flex justify-center">
+      <Sidebar />
+      <Chat />
     </div>
   )
 }
