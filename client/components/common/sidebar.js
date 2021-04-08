@@ -1,10 +1,10 @@
 import React from 'react'
 
-import Channel from './channel'
-import Application from './application'
-import Direct from './direct'
-import ServerBlock from './server-block'
-import UserBlock from './user-block'
+import Channel from '../mini_comp/channel'
+import Application from '../mini_comp/application'
+import Direct from '../mini_comp/direct'
+import ServerBlock from '../mini_comp/server-block'
+import UserBlock from '../mini_comp/user-block'
 
 const Sidebar = () => {
   return (

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 
 import store from '../redux/index'
 
-import MainPage from '../components/main_page'
+import Login from '../components/login'
 import Home from '../components/home'
 
 const Root = () => {
@@ -12,7 +12,7 @@ const Root = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={() => <MainPage />} />
+          <Route exact path="/" component={() => <Login />} />
           <Route exact path="/home" component={() => <Home />} />
         </Switch>
       </Router>

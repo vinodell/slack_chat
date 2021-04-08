@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Sidebar from './common/sidebar'
 import Chat from './common/chat-side'
 

@@ -14,7 +14,7 @@ const PORT = config.port // берем переменную из .env
 server.use('/extra', express.static(`${__dirname}/public`)) // при огромных нагрузках в 100к пользвателей, именно статик жрет больше всего производительности в Node.js
 // отсюда выгружаем статические данные, которые не меняются
 // в зависимости от пользователя. Текст/картинки/стили
-server.use(express.json({ limit: '50kb' }))
+server.use(express.json({ limit: '50kb' })) // парсит данные, чтобы мы могли получать json-данные с помощью запросов ниже
 // server.use((req, res, next) => {
 //   console.log(`${new Date()}: ${req.url} ${req.method} from ${req.ip}`)
 //   next()
@@ -24,6 +24,11 @@ let msgHistory = [] // загулшка(вместо БД)
 
 server.get('/', (req, res) => {
   res.send('express serv dude')
+})
+
+server.post('/api/v1/auth', (req, res) => {
+  console.log(req.body)
+  res.json({ status: "ok"})
 })
 
 console.log('Socket_IO status is:', config.socketStatus)
@@ -42,7 +47,7 @@ if (config.socketStatus === 'true') {
     })
 
     socket.on('disconnect', () => {
-      console.log(`the session of user: ${socket.id} is OVER`)
+    console.log(`the session of user: ${socket.id} is OVER`)
     })
   })
 }
