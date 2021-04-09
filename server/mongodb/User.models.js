@@ -8,8 +8,15 @@ const userSchema = new mongoose.Schema(
       type: [String],
       default: ['user']
     },
-    e_mail: String,
-    password: String
+    e_mail: {
+      type: String,
+      required: true, // обязательное поле, иначе будет ошибка
+      unique: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
   },
   {
     timestamp: true // чтобы были поля любого изменения объекта с 'time' этого изменения
