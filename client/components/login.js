@@ -40,7 +40,7 @@ const Login = () => {
                   <div className="mt-4 items-center flex justify-between">
                     <button
                       className="px-4 py-1 text-gray-600 font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded"
-                      type="submit"
+                      type="button"
                       onClick={() => { dispatch(signIn()) }}
                     >
                       Log_IN
