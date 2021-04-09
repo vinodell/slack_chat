@@ -1,10 +1,10 @@
 import express from 'express'
 import io from 'socket.io'
+import regeneratorRuntime from 'regenerator-runtime'
 import http from 'http'
-import mongoose from 'mongoose'
+import mongooseService from './services/mongoose'
 
 import config from './config'
-import userModel from './mongodb/models'
 
 const server = express()
 const ioServer = http.createServer(server)
@@ -21,6 +21,8 @@ server.use(express.json({ limit: '50kb' })) // парсит данные, что
 // })
 
 let msgHistory = [] // загулшка(вместо БД)
+
+mongooseService.connect()
 
 server.get('/', (req, res) => {
   res.send('express serv dude')
@@ -49,20 +51,6 @@ if (config.socketStatus === 'true') {
     socket.on('disconnect', () => {
     console.log(`the session of user: ${socket.id} is OVER`)
     })
-  })
-}
-
-console.log('mongodb status is:', config.mongoStatus)
-if (config.mongoStatus === 'true') {
-  mongoose.connect(config.mongoUrl, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true
-  })
-  server.post('/api/v1/add', (req, res) => {
-    const newUser = req.body
-    userModel.create(newUser)
-    res.send('user added to mongobase')
   })
 }
 

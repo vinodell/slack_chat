@@ -1,5 +1,4 @@
 import React from 'react'
-import MainPage from '../main_page'
 
 const Chat = () => {
   return (
@@ -23,7 +22,6 @@ const Chat = () => {
 
       {/* <!-- Chat messages --> */}
       <div className="px-6 py-4 flex-1 overflow-scroll-x">
-        <MainPage />
         {/* <!-- A message --> */}
         <div className="flex items-start mb-4">
           <img

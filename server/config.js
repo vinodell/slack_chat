@@ -5,7 +5,7 @@ const settings = {
   env: process.env.NODE_ENV,
   socketStatus: process.env.SOCKETS_IO_STATUS,
   mongoStatus: process.env.MONGO_STATUS,
-  mongoUrl: 'mongodb://127.0.0.1/'
+  mongoUrl: process.env.mongoUrl
 }
 
 export default settings
