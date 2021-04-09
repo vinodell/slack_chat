@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt-nodejs'
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
       type: [String],
       default: ['user']
     },
-    e_mail: {
+    email: {
       type: String,
       required: true, // обязательное поле, иначе будет ошибка
       unique: true
@@ -24,11 +24,38 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModifyed('password')) {
+  if (!this.isModified('password')) {
     return next()
   }
   this.password = bcrypt.hashSync(this.password)
   return next()
 })
 
-export default mongoose.model('users', userSchema)
+userSchema.method({
+  passwordMatches(password) {
+    console.log(bcrypt.hashSync(password))
+    return bcrypt.compareSync(password, this.password)
+  }
+})
+
+userSchema.statics = {
+  async findAndValidateUser ({ email, password }) {
+    if (!email) {
+      throw new Error('No email, dude')
+    }
+    if (!password) {
+      throw new Error('No password, dude')
+    }
+    const user = await this.findOne({ email }).exec()
+    if (!user) {
+      throw new Error('There is no such user, dude')
+    }
+    const isPasswordOk = await user.passwordMatches(password)
+    if (!isPasswordOk) {
+      throw new Error('password is incorrect')
+    }
+    return user
+  }
+}
+
+export default mongoose.model('chat', userSchema)

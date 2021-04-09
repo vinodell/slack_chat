@@ -5,7 +5,8 @@ const settings = {
   env: process.env.NODE_ENV,
   socketStatus: process.env.SOCKETS_IO_STATUS,
   mongoStatus: process.env.MONGO_STATUS,
-  mongoUrl: process.env.mongoUrl
+  mongoUrl: process.env.mongoUrl,
+  secret: process.env.SECRET_JWT || '239key'
 }
 
 export default settings
