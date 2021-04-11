@@ -1,21 +1,44 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router/immutable'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
-import store from '../redux/index'
+import store, { history } from '../redux'
 
 import Login from '../components/login'
 import Home from '../components/home'
+import Private from '../components/private_page'
+import Startup from './startup'
+
+const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
+  const { user, token } = useSelector((s) => s.auth)
+  const func = (props) => {
+    return !!user && !!token ? <Redirect to="/login" /> : <Component {...props} />
+  }
+  return <Route {...rest} render={func} />
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { user, token } = useSelector((s) => s.auth)
+  const func = (props) => {
+    return !!user && !!token ? <Component {...props} /> : <Redirect to="/private" />
+  }
+  return <Route {...rest} render={func} />
+}
 
 const Root = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={() => <Login />} />
-          <Route exact path="/home" component={() => <Home />} />
-        </Switch>
-      </Router>
+      <ConnectedRouter history={history}>
+        <Startup>
+          <Switch>
+            <OnlyAnonymousRoute exact path="/" component={() => <Login />} />
+            <OnlyAnonymousRoute exact path="/login" component={() => <Login />} />
+            <PrivateRoute exact path="/private" component={() => <Private />} />
+            <PrivateRoute exact path="/home" component={() => <Home />} />
+          </Switch>
+        </Startup>
+      </ConnectedRouter>
     </Provider>
   )
 }
