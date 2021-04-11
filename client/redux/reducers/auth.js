@@ -66,6 +66,17 @@ export function trySignIn() {
   }
 }
 
+// секретный route
+export function trySecretRoute() {
+  return () => {
+    fetch('/api/v1/user-info')
+      .then((it) => it.json())
+      .then((data) => {
+        console.log(data)
+      })
+  }
+}
+
 export function signIn() {
   return (dispatch, getState) => {
     const { email, password } = getState().auth

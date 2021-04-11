@@ -12,6 +12,7 @@ import http from 'http'
 import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
 import User from './mongodb/User.models'
+import rights from './middleware/rights'
 
 import config from './config'
 
@@ -46,10 +47,15 @@ let msgHistory = [] // загулшка(вместо БД)
 mongooseService.connect()
 
 // const user = new User({
-//   email: 'f@gmail.com',
-//   password: 'abcd'
+//   email: 'texas@gmail.com',
+//   password: '239',
+//   role: ['user', 'admin']
 // })
-// user.save()   // тестовое создание пользователя ручками
+// user.save() // тестовое создание пользователя ручками
+
+server.get('/api/v1/user-info', rights(['admin']), (req, res) => {
+  res.json({ status: 'AT-ST is ready' })
+})
 
 server.get('/', (req, res) => {
   res.send('express serv dude')

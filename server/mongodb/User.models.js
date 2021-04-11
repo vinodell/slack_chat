@@ -58,4 +58,4 @@ userSchema.statics = {
   }
 }
 
-export default mongoose.model('chat', userSchema)
+export default mongoose.model('slack', userSchema)

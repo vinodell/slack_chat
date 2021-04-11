@@ -32,7 +32,7 @@ const config = {
     proxy: {
       context: ['/api', '/ws'],
       target: `http://localhost:${PORT || 8080}`, // server port
-      ws: SOCKETS_IO_STATUS === 'true'
+      ws: SOCKETS_IO_STATUS === 'true',
     },
     publicPath: '/',
     historyApiFallback: true

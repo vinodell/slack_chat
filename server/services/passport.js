@@ -20,7 +20,7 @@ const jwtStrategy = new passportJWT.Strategy(jwtOptions, (jwtPayload, done) => {
       return done(err, null) // есть ошибка, а юзер null
     }
     if (user) {
-      return (null, user) // ошибка null, но есть user
+      return done(null, user) // ошибка null, но есть user
     }
     return done(null, false)
   })
