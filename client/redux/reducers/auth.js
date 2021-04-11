@@ -61,7 +61,7 @@ export function trySignIn() {
           token: data.token,
           user: data.user
         })
-        history.push('/private')
+        history.push('/home')
       })
   }
 }
@@ -86,7 +86,7 @@ export function signIn() {
           token: data.token,
           user: data.user
         })
-        history.push('/private')
+        history.push('/home')
       })
   }
 }

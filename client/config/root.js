@@ -7,7 +7,6 @@ import store, { history } from '../redux'
 
 import Login from '../components/login'
 import Home from '../components/home'
-import Private from '../components/private_page'
 import Startup from './startup'
 
 const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
@@ -21,7 +20,7 @@ const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { user, token } = useSelector((s) => s.auth)
   const func = (props) => {
-    return !!user && !!token ? <Component {...props} /> : <Redirect to="/private" />
+    return !!user && !!token ? <Component {...props} /> : <Redirect to="/login" />
   }
   return <Route {...rest} render={func} />
 }
@@ -32,9 +31,8 @@ const Root = () => {
       <ConnectedRouter history={history}>
         <Startup>
           <Switch>
-            <OnlyAnonymousRoute exact path="/" component={() => <Login />} />
+            <Route exact path="/" component={() => <Login />} />
             <OnlyAnonymousRoute exact path="/login" component={() => <Login />} />
-            <PrivateRoute exact path="/private" component={() => <Private />} />
             <PrivateRoute exact path="/home" component={() => <Home />} />
           </Switch>
         </Startup>
