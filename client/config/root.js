@@ -8,6 +8,7 @@ import store, { history } from '../redux'
 import Login from '../components/login'
 import Home from '../components/home'
 import Startup from './startup'
+import Regisrtation from '../components/registartion'
 
 const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
   const { user, token } = useSelector((s) => s.auth)
@@ -33,6 +34,7 @@ const Root = () => {
           <Switch>
             <Route exact path="/" component={() => <Login />} />
             <OnlyAnonymousRoute exact path="/login" component={() => <Login />} />
+            <OnlyAnonymousRoute exact path="/newuser" component={() => <Regisrtation />} />
             <PrivateRoute exact path="/home" component={() => <Home />} />
           </Switch>
         </Startup>

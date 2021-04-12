@@ -10,6 +10,7 @@ const LOGIN = 'LOGIN'
 
 const cookie = new Cookies()
 const initialState = {
+  name: '',
   email: '',
   password: '',
   token: cookie.get('token'), // если есть  cookie  с токеном, то она автоматически заполнится, если нет - пустая строка
