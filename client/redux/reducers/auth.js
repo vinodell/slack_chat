@@ -1,3 +1,4 @@
+// import { io } from 'socket.io-client'
 import Cookies from 'universal-cookie'
 
 import { history } from '..'
@@ -5,7 +6,9 @@ import { history } from '..'
 // import { data } from 'autoprefixer'
 
 const UPDATE_LOGIN = 'UPDATE_LOGIN'
+const UPDATE_NAME = 'UPDATE_NAME'
 const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+const USER_REGISTRATION = 'USER_REGISTRATION'
 const LOGIN = 'LOGIN'
 
 const cookie = new Cookies()
@@ -19,8 +22,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case UPDATE_NAME: {
+      return { ...state, name: action.name }
+    }
     case UPDATE_LOGIN: {
       return { ...state, email: action.email }
+    }
+    case USER_REGISTRATION: {
+      return {
+        ...state,
+        name: action.name,
+        email: action.email,
+        password: ''
+      }
     }
     case LOGIN: {
       return {
@@ -38,7 +52,22 @@ export default (state = initialState, action) => {
   }
 }
 
-export function updateLogIn(email) {
+// let socket
+// if (SOCKETS_IO_STATUS || false) {
+//   // eslint-disable-next-line
+//   socket = io(`${window.location.origin}`, {
+//     path: '/ws'
+//   })
+// }
+
+export function updateName(name) {
+  return {
+    type: UPDATE_LOGIN,
+    name
+  }
+}
+
+export function updateEmail(email) {
   return {
     type: UPDATE_LOGIN,
     email
@@ -68,15 +97,15 @@ export function trySignIn() {
 }
 
 // секретный route
-export function trySecretRoute() {
-  return () => {
-    fetch('/api/v1/user-info')
-      .then((it) => it.json())
-      .then((data) => {
-        console.log(data)
-      })
-  }
-}
+// export function trySecretRoute() {
+//   return () => {
+//     fetch('/api/v1/user-info')
+//       .then((it) => it.json())
+//       .then((data) => {
+//         console.log(data)
+//       })
+//   }
+// }
 
 export function signIn() {
   return (dispatch, getState) => {
@@ -99,6 +128,32 @@ export function signIn() {
           user: data.user
         })
         history.push('/home')
+      })
+  }
+}
+
+export function userRegistration(name, email, password) {
+  return (dispatch) => {
+    fetch('/api/v1/new_user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        name,
+        password
+      })
+    })
+      .then((it) => it.json())
+      .then((data) => {
+        dispatch({
+          type: USER_REGISTRATION,
+          name: data.name,
+          email: data.email,
+          password: data.password
+        })
+        history.push('/login')
       })
   }
 }

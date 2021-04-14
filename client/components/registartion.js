@@ -1,10 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+
+import { userRegistration } from '../redux/reducers/auth'
 
 const Registration = () => {
-  // const dispatch = useDispatch()
-  const { name, email, password } = useSelector((s) => s.auth)
+  const dispatch = useDispatch()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <div className="w-screen h-screen bg-gray-300 font-sans login bg-cover">
       <div className="container mx-auto h-full flex flex-1 justify-center items-center">
@@ -22,7 +26,7 @@ const Registration = () => {
                   id="name"
                   placeholder="enter your name"
                   value={name}
-                  // onChange={(e) => dispatch(updateLogIn(e.target.value))}
+                  onChange={(e) => setName(e.target.value)}
                 />
                 <label className="block text-sm text-gray-600" htmlFor="email">
                   E-mail
@@ -33,7 +37,7 @@ const Registration = () => {
                   id="email"
                   placeholder="enter your e-mail"
                   value={email}
-                  // onChange={(e) => dispatch(updateLogIn(e.target.value))}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className="mt-2">
                   <label className="block text-sm text-gray-600" htmlFor="password">
@@ -45,15 +49,15 @@ const Registration = () => {
                     id="password"
                     placeholder="enter your psw"
                     value={password}
-                    // onChange={(e) => dispatch(updatePassword(e.target.value))}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className="mt-4 items-center flex justify-between">
                     <button
                       className="px-4 py-1 text-gray-500 font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded"
                       type="button"
-                      // onClick={() => {
-                      //   dispatch(signIn())
-                      // }}
+                      onClick={() => {
+                        dispatch(userRegistration(name, email, password))
+                      }}
                     >
                       save(data)
                     </button>

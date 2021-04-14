@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { updateLogIn, updatePassword, signIn } from '../redux/reducers/auth'
+import { updateEmail, updatePassword, signIn } from '../redux/reducers/auth'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ const Login = () => {
                   id="email"
                   placeholder="enter your e-mail"
                   value={email}
-                  onChange={(e) => dispatch(updateLogIn(e.target.value))}
+                  onChange={(e) => dispatch(updateEmail(e.target.value))}
                 />
                 <div className="mt-2">
                   <label className="block text-sm text-gray-600" htmlFor="password">

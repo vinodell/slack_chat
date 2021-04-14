@@ -12,7 +12,8 @@ import http from 'http'
 import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
 import User from './mongodb/User.models'
-import rights from './middleware/rights'
+// import rights from './middleware/rights'
+import userModels from '../server/mongodb/User.models'
 
 import config from './config'
 
@@ -53,13 +54,9 @@ mongooseService.connect()
 // })
 // user.save() // тестовое создание пользователя ручками
 
-server.get('/api/v1/user-info', rights(['admin']), (req, res) => {
-  res.json({ status: 'AT-ST is ready' })
-})
-
-server.get('/', (req, res) => {
-  res.send('express serv dude')
-})
+// server.get('/api/v1/user-info', rights(['admin']), (req, res) => {
+//   res.json({ status: 'AT-ST is ready' })
+// })
 
 server.get('/api/v1/auth', async (req, res) => {
   try {
@@ -91,6 +88,18 @@ server.post('/api/v1/auth', async (req, res) => {
   }
 })
 
+server.post('/api/v1/new_user', async (req, res) => {
+  const { name, email, password } = req.body
+  try {
+    const user = await userModels.create({ name, email, password })
+    console.log(user)
+    res.json({ status: 'ok', user })
+  } catch (err) {
+    console.log(err)
+    res.json({ status: 'invalid data' })
+  }
+})
+
 console.log('Socket_IO status is:', config.socketStatus)
 if (config.socketStatus === 'true') {
   const socketIO = io(ioServer, {
@@ -105,7 +114,9 @@ if (config.socketStatus === 'true') {
       msgHistory.push(arg) // сообщение после отправки добавляется в историю сообщений
       socketIO.emit('messageHistory', msgHistory) // обновленная история сообщений отправляется всем клиентам
     })
-
+    // socket.on('new_user', (name) => {
+    //   console.log(`a new user - ${name} have joint the chat`)
+    // })
     socket.on('disconnect', () => {
       console.log(`the session of user: ${socket.id} is OVER`)
     })

@@ -3,7 +3,10 @@ import bcrypt from 'bcrypt-nodejs'
 
 const userSchema = new mongoose.Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true
+    },
     role: {
       type: [String],
       default: ['user']
