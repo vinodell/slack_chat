@@ -1,4 +1,4 @@
-import { io } from 'socket.io-client'
+import io from 'socket.io-client'
 
 const GET_MESSAGES = 'GET_MESSAGES'
 const SET_MESSAGE = 'SET_MESSAGE'
@@ -6,7 +6,8 @@ const CURRENT_MESSAGE = 'CURRENT_MESSAGE'
 
 const initialState = {
   messageHistory: [],
-  userMessage: ''
+  userMessage: '',
+  currentRoom: 'general'
 }
 
 export default (state = initialState, action) => {

@@ -2,7 +2,6 @@ const { resolve } = require('path')
 
 import express from 'express'
 import io from 'socket.io'
-// import favicon from 'serve-favicon'
 import regeneratorRuntime from 'regenerator-runtime'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
@@ -18,7 +17,7 @@ import userModels from '../server/mongodb/User.models'
 import config from './config'
 
 const server = express()
-const ioServer = http.createServer(server)
+const httpServer = http.createServer(server)
 
 const PORT = config.port // берем переменную из .env
 
@@ -101,8 +100,8 @@ server.post('/api/v1/new_user', async (req, res) => {
 })
 
 console.log('Socket_IO status is:', config.socketStatus)
-if (config.socketStatus === 'true') {
-  const socketIO = io(ioServer, {
+if (config.socketStatus) {
+  const socketIO = io(httpServer, {
     path: '/ws'
   })
 
@@ -114,15 +113,12 @@ if (config.socketStatus === 'true') {
       msgHistory.push(arg) // сообщение после отправки добавляется в историю сообщений
       socketIO.emit('messageHistory', msgHistory) // обновленная история сообщений отправляется всем клиентам
     })
-    // socket.on('new_user', (name) => {
-    //   console.log(`a new user - ${name} have joint the chat`)
-    // })
     socket.on('disconnect', () => {
       console.log(`the session of user: ${socket.id} is OVER`)
     })
   })
 }
 
-ioServer.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`serving at http://localhost:${PORT}/`)
 })

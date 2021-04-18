@@ -2,7 +2,6 @@ import React from 'react'
 
 import Channel from '../mini_comp/channel'
 import Application from '../mini_comp/application'
-import Direct from '../mini_comp/direct'
 import ServerBlock from '../mini_comp/server-block'
 import UserBlock from '../mini_comp/user-block'
 
@@ -12,7 +11,6 @@ const Sidebar = () => {
       <ServerBlock />
       <UserBlock />
       <Channel />
-      <Direct />
       <Application />
     </div>
   )

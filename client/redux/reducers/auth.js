@@ -1,9 +1,6 @@
-// import { io } from 'socket.io-client'
 import Cookies from 'universal-cookie'
 
 import { history } from '..'
-
-// import { data } from 'autoprefixer'
 
 const UPDATE_LOGIN = 'UPDATE_LOGIN'
 const UPDATE_NAME = 'UPDATE_NAME'
@@ -51,14 +48,6 @@ export default (state = initialState, action) => {
       return state
   }
 }
-
-// let socket
-// if (SOCKETS_IO_STATUS || false) {
-//   // eslint-disable-next-line
-//   socket = io(`${window.location.origin}`, {
-//     path: '/ws'
-//   })
-// }
 
 export function updateName(name) {
   return {

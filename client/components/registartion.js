@@ -56,7 +56,9 @@ const Registration = () => {
                       className="px-4 py-1 text-gray-500 font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded"
                       type="button"
                       onClick={() => {
-                        dispatch(userRegistration(name, email, password))
+                        return (!name || !email || !password)
+                          ? alert('enter you data correctly')
+                          : dispatch(userRegistration(name, email, password))
                       }}
                     >
                       save(data)
